@@ -17,6 +17,7 @@
             width: 100vw;
             height: 100vh;
         }
+
         .main-image {
             width: 100%;
             height: 100%;
@@ -90,7 +91,7 @@
             background: white;
             padding: 20px;
             border-radius: 10px;
-            z-index: 1000; /* Aseguramos que el álbum tenga un z-index menor */
+            z-index: 100;
         }
 
         .album img {
@@ -102,31 +103,20 @@
             position: absolute;
             width: 100px;
             height: auto;
-            display: none; /* Se mantiene oculto hasta que el personaje se desbloquee */
-            z-index: 2000; /* Asegura que las imágenes de los personajes estén por encima de otros elementos */
         }
-        /* Contenedor de los personajes desbloqueados */
-        #unlockedCharacters {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2000; /* Asegura que el contenedor de los personajes desbloqueados esté sobre el álbum */
-        }
-
 
         #mabelUnlocked {
             top: 20%;
-            left: 25%;
+            left: 20%;
         }
 
         #dipperUnlocked {
-            top: 25%;
-            left: 45%;
+            top: 20%;
+            left: 40%;
         }
 
         #stanUnlocked {
-            top: 30%;
+            top: 20%;
             left: 60%;
         }
     </style>
@@ -134,61 +124,58 @@
 <body>
     <div class="container">
         <img src="imagenes/taller.jpg" alt="Escena Principal" class="main-image">
-        
         <div class="main-image-container">
-            <img src="path/to/your/image.png" alt="Scene" class="main-image">
-        
             <!-- Áreas clickeables -->
-            <button class="clickable" style="top: 45%; left: 76%; width: 5%; height: 10%;" onclick="showCode('mabel')"></button>
-            <button class="clickable" style="top: 63%; left: 64%; width: 5%; height: 8%;" onclick="showCode('dipper')"></button>
-            <button class="clickable" style="top: 64%; left: 23%; width: 5%; height: 8%;" onclick="showCode('stan')"></button>
+            <button class="clickable" style="top: 45%; left: 76%; width: 5%; height: 10%;" data-character="mabel"></button>
+            <button class="clickable" style="top: 63%; left: 64%; width: 5%; height: 8%;" data-character="dipper"></button>
+            <button class="clickable" style="top: 64%; left: 23%; width: 5%; height: 8%;" data-character="stan"></button>
             <button class="clickable" style="top: 25%; right: 49%; width: 6%; height: 12%;" onclick="showComputerInput()"></button>
             <button class="clickable" style="top: 85%; left: 80%; width: 5%; height: 10%;" onclick="showAlbum()"></button>
         </div>
-           
-        
-    <!-- Login overlay -->
-    <div class="login-overlay" id="loginOverlay">
-        <div class="login-box">
-            <h2>Introduzca el código para ingresar</h2>
-            <input type="text" id="loginInput">
-            <button onclick="checkLogin()">Ingresar</button>
+
+        <!-- Login overlay -->
+        <div class="login-overlay" id="loginOverlay">
+            <div class="login-box">
+                <h2>Introduzca el código para ingresar</h2>
+                <input type="text" id="loginInput">
+                <button onclick="checkLogin()">Ingresar</button>
+            </div>
         </div>
-    </div>
 
-    <!-- Modales de códigos -->
-    <div class="code-modal" id="mabelCode">
-        <img src="imagenes/desbloqueamabel.png" alt="Código Mabel" class="code-image">
-        <button onclick="hideCode()">Cerrar</button>
-    </div>
-
-    <div class="code-modal" id="dipperCode">
-        <img src="imagenes/desbloqueadipper.png" alt="Código Dipper" class="code-image">
-        <button onclick="hideCode()">Cerrar</button>
-    </div>
-
-    <div class="code-modal" id="stanCode">
-        <img src="imagenes/desbloqueatíostan.png" alt="Código Stan" class="code-image">
-        <button onclick="hideCode()">Cerrar</button>
-    </div>
-
-    <!-- Input de la computadora -->
-    <div class="computer-input" id="computerInput">
-        <h2>Introduzca el código</h2>
-        <input type="text" id="codeInput">
-        <button onclick="checkCode()">Verificar</button>
-        <button onclick="hideComputerInput()">Cerrar</button>
-    </div>
-
-    <!-- Álbum -->
-    <div class="album" id="album">
-        <img src="imagenes/albumpersonajes.png" alt="Álbum" id="albumImage">
-        <div id="unlockedCharacters">
-            <img id="mabelUnlocked" src="imagenes/mabel.png" style="display: none;">
-            <img id="dipperUnlocked" src="imagenes/dipper.png" style="display: none;">
-            <img id="stanUnlocked" src="imagenes/tiostan.png" style="display: none;">
+        <!-- Modales de códigos -->
+        <div class="code-modal" id="mabelCode">
+            <img src="imagenes/desbloqueamabel.png" alt="Código Mabel" class="code-image">
+            <button onclick="hideCode()">Cerrar</button>
         </div>
-        <button onclick="hideAlbum()">Cerrar</button>
+
+        <div class="code-modal" id="dipperCode">
+            <img src="imagenes/desbloqueadipper.png" alt="Código Dipper" class="code-image">
+            <button onclick="hideCode()">Cerrar</button>
+        </div>
+
+        <div class="code-modal" id="stanCode">
+            <img src="imagenes/desbloqueatíostan.png" alt="Código Stan" class="code-image">
+            <button onclick="hideCode()">Cerrar</button>
+        </div>
+
+        <!-- Input de la computadora -->
+        <div class="computer-input" id="computerInput">
+            <h2>Introduzca el código</h2>
+            <input type="text" id="codeInput">
+            <button onclick="checkCode()">Verificar</button>
+            <button onclick="hideComputerInput()">Cerrar</button>
+        </div>
+
+        <!-- Álbum -->
+        <div class="album" id="album">
+            <img src="imagenes/albumpersonajes.png" alt="Álbum" id="albumImage">
+            <div id="unlockedCharacters">
+                <img id="mabelUnlocked" src="imagenes/mabel.png" style="display: none;">
+                <img id="dipperUnlocked" src="imagenes/dipper.png" style="display: none;">
+                <img id="stanUnlocked" src="imagenes/tiostan.png" style="display: none;">
+            </div>
+            <button onclick="hideAlbum()">Cerrar</button>
+        </div>
     </div>
 
     <script>
@@ -197,7 +184,7 @@
             mabel: false,
             dipper: false,
             stan: false
-        }
+        };
 
         // Función de login
         function checkLogin() {
@@ -258,7 +245,25 @@
         function hideAlbum() {
             document.getElementById('album').style.display = 'none';
         }
+
+        // Agregar soporte tanto para clics como para toques en dispositivos móviles
+        document.querySelectorAll('.clickable').forEach(button => {
+            button.addEventListener('click', function(event) {
+                handleClick(event);
+            });
+
+            button.addEventListener('touchstart', function(event) {
+                event.preventDefault(); // Prevenir el comportamiento por defecto del toque
+                handleClick(event);
+            });
+        });
+
+        function handleClick(event) {
+            const character = event.target.dataset.character; // Asume que el botón tiene un atributo data-character
+            if (character) {
+                showCode(character);
+            }
+        }
     </script>
-
-
+</body>
 </html>
