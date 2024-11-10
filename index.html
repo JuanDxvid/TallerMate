@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taller de Matemáticas - Gravity Falls</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        .main-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .login-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .clickable {
+            position: absolute;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+        }
+
+        .code-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 100;
+            text-align: center;
+        }
+
+        .code-image {
+            max-width: 80vw;
+            max-height: 80vh;
+        }
+
+        .computer-input {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 100;
+            text-align: center;
+        }
+
+        .album {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 1000; /* Aseguramos que el álbum tenga un z-index menor */
+        }
+
+        .album img {
+            max-width: 80vw;
+            max-height: 80vh;
+        }
+
+        .character-unlocked {
+            position: absolute;
+            width: 100px;
+            height: auto;
+            display: none; /* Se mantiene oculto hasta que el personaje se desbloquee */
+            z-index: 2000; /* Asegura que las imágenes de los personajes estén por encima de otros elementos */
+        }
+        /* Contenedor de los personajes desbloqueados */
+        #unlockedCharacters {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2000; /* Asegura que el contenedor de los personajes desbloqueados esté sobre el álbum */
+        }
+
+
+        #mabelUnlocked {
+            top: 20%;
+            left: 25%;
+        }
+
+        #dipperUnlocked {
+            top: 25%;
+            left: 45%;
+        }
+
+        #stanUnlocked {
+            top: 30%;
+            left: 60%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="imagenes/taller.jpg" alt="Escena Principal" class="main-image">
+        
+        <div class="main-image-container">
+            <img src="path/to/your/image.png" alt="Scene" class="main-image">
+        
+            <!-- Áreas clickeables -->
+            <button class="clickable" style="top: 45%; left: 76%; width: 5%; height: 10%;" onclick="showCode('mabel')"></button>
+            <button class="clickable" style="top: 63%; left: 64%; width: 5%; height: 8%;" onclick="showCode('dipper')"></button>
+            <button class="clickable" style="top: 64%; left: 23%; width: 5%; height: 8%;" onclick="showCode('stan')"></button>
+            <button class="clickable" style="top: 25%; right: 49%; width: 6%; height: 12%;" onclick="showComputerInput()"></button>
+            <button class="clickable" style="top: 85%; left: 80%; width: 5%; height: 10%;" onclick="showAlbum()"></button>
+        </div>
+           
+        
+    <!-- Login overlay -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-box">
+            <h2>Introduzca el código para ingresar</h2>
+            <input type="text" id="loginInput">
+            <button onclick="checkLogin()">Ingresar</button>
+        </div>
+    </div>
+
+    <!-- Modales de códigos -->
+    <div class="code-modal" id="mabelCode">
+        <img src="imagenes/desbloqueamabel.png" alt="Código Mabel" class="code-image">
+        <button onclick="hideCode()">Cerrar</button>
+    </div>
+
+    <div class="code-modal" id="dipperCode">
+        <img src="imagenes/desbloqueadipper.png" alt="Código Dipper" class="code-image">
+        <button onclick="hideCode()">Cerrar</button>
+    </div>
+
+    <div class="code-modal" id="stanCode">
+        <img src="imagenes/desbloqueatíostan.png" alt="Código Stan" class="code-image">
+        <button onclick="hideCode()">Cerrar</button>
+    </div>
+
+    <!-- Input de la computadora -->
+    <div class="computer-input" id="computerInput">
+        <h2>Introduzca el código</h2>
+        <input type="text" id="codeInput">
+        <button onclick="checkCode()">Verificar</button>
+        <button onclick="hideComputerInput()">Cerrar</button>
+    </div>
+
+    <!-- Álbum -->
+    <div class="album" id="album">
+        <img src="imagenes/albumpersonajes.png" alt="Álbum" id="albumImage">
+        <div id="unlockedCharacters">
+            <img id="mabelUnlocked" src="imagenes/mabel.png" style="display: none;">
+            <img id="dipperUnlocked" src="imagenes/dipper.png" style="display: none;">
+            <img id="stanUnlocked" src="imagenes/tiostan.png" style="display: none;">
+        </div>
+        <button onclick="hideAlbum()">Cerrar</button>
+    </div>
+
+    <script>
+        // Variables para tracking de personajes desbloqueados
+        let unlockedCharacters = {
+            mabel: false,
+            dipper: false,
+            stan: false
+        }
+
+        // Función de login
+        function checkLogin() {
+            const input = document.getElementById('loginInput').value.toLowerCase();
+            if (input === 'gravity falls') {
+                document.getElementById('loginOverlay').style.display = 'none';
+            } else {
+                alert('Código incorrecto');
+            }
+        }
+
+        // Funciones para mostrar/ocultar códigos
+        function showCode(character) {
+            document.getElementById(`${character}Code`).style.display = 'block';
+        }
+
+        function hideCode() {
+            document.querySelectorAll('.code-modal').forEach(modal => {
+                modal.style.display = 'none';
+            });
+        }
+
+        // Funciones para la computadora
+        function showComputerInput() {
+            document.getElementById('computerInput').style.display = 'block';
+        }
+
+        function hideComputerInput() {
+            document.getElementById('computerInput').style.display = 'none';
+            document.getElementById('codeInput').value = '';
+        }
+
+        function checkCode() {
+            const input = document.getElementById('codeInput').value.toLowerCase();
+            if (input === 'pato') {
+                unlockedCharacters.mabel = true;
+                document.getElementById('mabelUnlocked').style.display = 'block';
+                alert('¡Felicidades! Has desbloqueado a Mabel');
+            } else if (input === 'reina disco baba') {
+                unlockedCharacters.dipper = true;
+                document.getElementById('dipperUnlocked').style.display = 'block';
+                alert('¡Felicidades! Has desbloqueado a Dipper');
+            } else if (input === 'estafador') {
+                unlockedCharacters.stan = true;
+                document.getElementById('stanUnlocked').style.display = 'block';
+                alert('¡Felicidades! Has desbloqueado al Tío Stan');
+            } else {
+                alert('Código incorrecto');
+            }
+            hideComputerInput();
+        }
+
+        // Funciones para el álbum
+        function showAlbum() {
+            document.getElementById('album').style.display = 'block';
+        }
+
+        function hideAlbum() {
+            document.getElementById('album').style.display = 'none';
+        }
+    </script>
+
+
+</html>
