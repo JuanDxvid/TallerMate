@@ -24,7 +24,7 @@
             object-fit: contain;
         }
 
-        .login-overlay {
+        .overlay {
             position: fixed;
             top: 0;
             left: 0;
@@ -37,87 +37,68 @@
             z-index: 1000;
         }
 
-        .login-box {
+        .modal {
             background: white;
             padding: 20px;
             border-radius: 10px;
             text-align: center;
+            max-width: 90%;
+            max-height: 90%;
+            overflow: auto;
         }
 
         .clickable {
             position: absolute;
-            cursor: pointer;
             background: transparent;
             border: none;
         }
 
-        .code-modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            z-index: 100;
-            text-align: center;
-        }
-
         .code-image {
-            max-width: 80vw;
-            max-height: 80vh;
-        }
-
-        .computer-input {
-            display: none;
-            position: fixed;
-            top: 80%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            z-index: 100;
-            text-align: center;
-        }
-
-        .album {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            z-index: 100;
-        }
-
-        .album img {
-            max-width: 80vw;
-            max-height: 80vh;
+            max-width: 100%;
+            max-height: 60vh;
         }
 
         .character-unlocked {
             position: absolute;
-            width: 100px;
+            width: 20%;
             height: auto;
         }
 
-        #mabelUnlocked {
-            top: 20%;
-            left: 20%;
-        }
+        #mabelUnlocked { top: 20%; left: 20%; }
+        #dipperUnlocked { top: 20%; left: 40%; }
+        #stanUnlocked { top: 20%; left: 60%; }
 
-        #dipperUnlocked {
-            top: 20%;
-            left: 40%;
-        }
-
-        #stanUnlocked {
-            top: 20%;
-            left: 60%;
+        @media (max-width: 768px) {
+            .clickable {
+                width: 20% !important;
+                height: 20% !important;
+            }
+            .clickable[data-character="mabel"] {
+                top: 40% !important;
+                left: 70% !important;
+            }
+            .clickable[data-character="dipper"] {
+                top: 58% !important;
+                left: 58% !important;
+            }
+            .clickable[data-character="stan"] {
+                top: 59% !important;
+                left: 18% !important;
+            }
+            /* Ajustar la posición del botón de la computadora */
+            .clickable[onclick="showComputerInput()"] {
+                top: 20% !important;
+                right: 44% !important;
+                width: 25% !important;
+                height: 25% !important;
+            }
+            /* Ajustar la posición del botón del álbum */
+            .clickable[onclick="showAlbum()"] {
+                top: 80% !important;
+                left: 75% !important;
+                width: 25% !important;
+                height: 25% !important;
+            }
         }
     </style>
 </head>
@@ -125,68 +106,57 @@
     <div class="container">
         <img src="imagenes/taller.jpg" alt="Escena Principal" class="main-image">
         <div class="main-image-container">
-            <!-- Áreas clickeables -->
             <button class="clickable" style="top: 45%; left: 76%; width: 5%; height: 10%;" data-character="mabel"></button>
             <button class="clickable" style="top: 63%; left: 64%; width: 5%; height: 8%;" data-character="dipper"></button>
             <button class="clickable" style="top: 64%; left: 23%; width: 5%; height: 8%;" data-character="stan"></button>
             <button class="clickable" style="top: 25%; right: 49%; width: 6%; height: 12%;" onclick="showComputerInput()"></button>
             <button class="clickable" style="top: 85%; left: 80%; width: 5%; height: 10%;" onclick="showAlbum()"></button>
         </div>
+    </div>
 
-        <!-- Login overlay -->
-        <div class="login-overlay" id="loginOverlay">
-            <div class="login-box">
-                <h2>Introduzca el código para ingresar</h2>
-                <input type="text" id="loginInput">
-                <button onclick="checkLogin()">Ingresar</button>
-            </div>
+    <div id="loginOverlay" class="overlay">
+        <div class="modal">
+            <h2>Introduzca el código para ingresar</h2>
+            <input type="text" id="loginInput">
+            <button onclick="checkLogin()">Ingresar</button>
         </div>
+    </div>
 
-        <!-- Modales de códigos -->
-        <div class="code-modal" id="mabelCode">
-            <img src="imagenes/desbloqueamabel.png" alt="Código Mabel" class="code-image">
+    <div id="codeModal" class="overlay" style="display: none;">
+        <div class="modal">
+            <img id="codeImage" src="" alt="Código" class="code-image">
             <button onclick="hideCode()">Cerrar</button>
         </div>
+    </div>
 
-        <div class="code-modal" id="dipperCode">
-            <img src="imagenes/desbloqueadipper.png" alt="Código Dipper" class="code-image">
-            <button onclick="hideCode()">Cerrar</button>
-        </div>
-
-        <div class="code-modal" id="stanCode">
-            <img src="imagenes/desbloqueatíostan.png" alt="Código Stan" class="code-image">
-            <button onclick="hideCode()">Cerrar</button>
-        </div>
-
-        <!-- Input de la computadora -->
-        <div class="computer-input" id="computerInput">
+    <div id="computerInputModal" class="overlay" style="display: none;">
+        <div class="modal">
             <h2>Introduzca el código</h2>
             <input type="text" id="codeInput">
             <button onclick="checkCode()">Verificar</button>
             <button onclick="hideComputerInput()">Cerrar</button>
         </div>
+    </div>
 
-        <!-- Álbum -->
-        <div class="album" id="album">
-            <img src="imagenes/albumpersonajes.png" alt="Álbum" id="albumImage">
+    <div id="albumModal" class="overlay" style="display: none;">
+        <div class="modal">
+            <img src="imagenes/albumpersonajes.png" alt="Álbum" id="albumImage" style="max-width: 100%; height: auto;">
             <div id="unlockedCharacters">
-                <img id="mabelUnlocked" src="imagenes/mabel.png" style="display: none;">
-                <img id="dipperUnlocked" src="imagenes/dipper.png" style="display: none;">
-                <img id="stanUnlocked" src="imagenes/tiostan.png" style="display: none;">
+                <img id="mabelUnlocked" src="imagenes/mabel.png" class="character-unlocked" style="display: none;">
+                <img id="dipperUnlocked" src="imagenes/dipper.png" class="character-unlocked" style="display: none;">
+                <img id="stanUnlocked" src="imagenes/tiostan.png" class="character-unlocked" style="display: none;">
             </div>
             <button onclick="hideAlbum()">Cerrar</button>
         </div>
     </div>
 
     <script>
-        // Variables para tracking de personajes desbloqueados
         let unlockedCharacters = {
             mabel: false,
             dipper: false,
             stan: false
         };
 
-        // Función de login
         function checkLogin() {
             const input = document.getElementById('loginInput').value.toLowerCase();
             if (input === 'gravity falls') {
@@ -196,24 +166,23 @@
             }
         }
 
-        // Funciones para mostrar/ocultar códigos
         function showCode(character) {
-            document.getElementById(`${character}Code`).style.display = 'block';
+            const codeModal = document.getElementById('codeModal');
+            const codeImage = document.getElementById('codeImage');
+            codeImage.src = `imagenes/desbloquea${character}.png`;
+            codeModal.style.display = 'flex';
         }
 
         function hideCode() {
-            document.querySelectorAll('.code-modal').forEach(modal => {
-                modal.style.display = 'none';
-            });
+            document.getElementById('codeModal').style.display = 'none';
         }
 
-        // Funciones para la computadora
         function showComputerInput() {
-            document.getElementById('computerInput').style.display = 'block';
+            document.getElementById('computerInputModal').style.display = 'flex';
         }
 
         function hideComputerInput() {
-            document.getElementById('computerInput').style.display = 'none';
+            document.getElementById('computerInputModal').style.display = 'none';
             document.getElementById('codeInput').value = '';
         }
 
@@ -237,33 +206,22 @@
             hideComputerInput();
         }
 
-        // Funciones para el álbum
         function showAlbum() {
-            document.getElementById('album').style.display = 'block';
+            document.getElementById('albumModal').style.display = 'flex';
         }
 
         function hideAlbum() {
-            document.getElementById('album').style.display = 'none';
+            document.getElementById('albumModal').style.display = 'none';
         }
 
-        // Agregar soporte tanto para clics como para toques en dispositivos móviles
         document.querySelectorAll('.clickable').forEach(button => {
             button.addEventListener('click', function(event) {
-                handleClick(event);
-            });
-
-            button.addEventListener('touchstart', function(event) {
-                event.preventDefault(); // Prevenir el comportamiento por defecto del toque
-                handleClick(event);
+                const character = event.target.dataset.character;
+                if (character) {
+                    showCode(character);
+                }
             });
         });
-
-        function handleClick(event) {
-            const character = event.target.dataset.character; // Asume que el botón tiene un atributo data-character
-            if (character) {
-                showCode(character);
-            }
-        }
     </script>
 </body>
 </html>
