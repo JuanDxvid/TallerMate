@@ -51,6 +51,7 @@
             position: absolute;
             background: transparent;
             border: none;
+            cursor: pointer;
         }
 
         .code-image {
@@ -68,37 +69,23 @@
         #dipperUnlocked { top: 20%; left: 40%; }
         #stanUnlocked { top: 20%; left: 60%; }
 
+        /* Estilos específicos para cada botón clickeable */
+        #mabelButton { top: 45%; left: 76%; width: 5%; height: 10%; }
+        #dipperButton { top: 63%; left: 64%; width: 5%; height: 8%; }
+        #stanButton { top: 64%; left: 23%; width: 5%; height: 8%; }
+        #computerButton { top: 25%; right: 49%; width: 6%; height: 12%; }
+        #albumButton { top: 85%; left: 80%; width: 5%; height: 10%; }
+
         @media (max-width: 768px) {
             .clickable {
                 width: 20% !important;
                 height: 20% !important;
             }
-            .clickable[data-character="mabel"] {
-                top: 40% !important;
-                left: 70% !important;
-            }
-            .clickable[data-character="dipper"] {
-                top: 58% !important;
-                left: 58% !important;
-            }
-            .clickable[data-character="stan"] {
-                top: 59% !important;
-                left: 18% !important;
-            }
-            /* Ajustar la posición del botón de la computadora */
-            .clickable[onclick="showComputerInput()"] {
-                top: 10% !important;
-                right: 44% !important;
-                width: 25% !important;
-                height: 25% !important;
-            }
-            /* Ajustar la posición del botón del álbum */
-            .clickable[onclick="showAlbum()"] {
-                top: 80% !important;
-                left: 75% !important;
-                width: 25% !important;
-                height: 25% !important;
-            }
+            #mabelButton { top: 40% !important; left: 70% !important; }
+            #dipperButton { top: 58% !important; left: 58% !important; }
+            #stanButton { top: 59% !important; left: 18% !important; }
+            #computerButton { top: 20% !important; right: 44% !important; width: 25% !important; height: 25% !important; }
+            #albumButton { top: 80% !important; left: 75% !important; width: 25% !important; height: 25% !important; }
         }
     </style>
 </head>
@@ -106,11 +93,11 @@
     <div class="container">
         <img src="imagenes/taller.jpg" alt="Escena Principal" class="main-image">
         <div class="main-image-container">
-            <button class="clickable" style="top: 45%; left: 76%; width: 5%; height: 10%;" data-character="mabel"></button>
-            <button class="clickable" style="top: 63%; left: 64%; width: 5%; height: 8%;" data-character="dipper"></button>
-            <button class="clickable" style="top: 64%; left: 23%; width: 5%; height: 8%;" data-character="stan"></button>
-            <button class="clickable" style="top: 25%; right: 49%; width: 6%; height: 12%;" onclick="showComputerInput()"></button>
-            <button class="clickable" style="top: 85%; left: 80%; width: 5%; height: 10%;" onclick="showAlbum()"></button>
+            <button id="mabelButton" class="clickable" data-character="mabel"></button>
+            <button id="dipperButton" class="clickable" data-character="dipper"></button>
+            <button id="stanButton" class="clickable" data-character="stan"></button>
+            <button id="computerButton" class="clickable" onclick="showComputerInput()"></button>
+            <button id="albumButton" class="clickable" onclick="showAlbum()"></button>
         </div>
     </div>
 
