@@ -156,6 +156,9 @@
          function showCode(character) {
          const codeModal = document.getElementById('codeModal');
          const codeImage = document.getElementById('codeImage');
+         if (character === 'stan') {
+         codeImage.src = `imagenes/desbloqueatiostan.png`;
+         } else {
          codeImage.src = `imagenes/desbloquea${character}.png`;
          }
         codeModal.style.display = 'flex';
