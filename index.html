@@ -153,12 +153,18 @@
             }
         }
 
-        function showCode(character) {
-            const codeModal = document.getElementById('codeModal');
-            const codeImage = document.getElementById('codeImage');
-            codeImage.src = `imagenes/desbloquea${character}.png`;
-            codeModal.style.display = 'flex';
-        }
+         function showCode(character) {
+         const codeModal = document.getElementById('codeModal');
+         const codeImage = document.getElementById('codeImage');
+         if (character === 'stan') {
+         codeImage.src = `imagenes/desbloqueatiostan.png`;
+         } else {
+         codeImage.src = `imagenes/desbloquea${character}.png`;
+         }
+        codeModal.style.display = 'flex';
+         }
+         `</QuickEdit>`
+        
 
         function hideCode() {
             document.getElementById('codeModal').style.display = 'none';
